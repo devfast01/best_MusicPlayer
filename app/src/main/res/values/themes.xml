@@ -1,0 +1,97 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Music" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="fontFamily">@font/medium</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/blue</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <style name="Theme.Music.Font" parent="Theme.Music">
+        <item name="background">@color/white</item>
+        <item name="android:textColor">@color/onWhite</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Theme.Music.Single">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Theme.Music.FontInterface">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Theme.Music.IconFillColor">
+        <item name="tint">@color/blue</item>
+    </style>
+
+    <style name="Theme.Music.IconFillColorTransparent">
+        <item name="tint">#CB0B0B0B</item>
+    </style>
+
+    <style name="Theme.Music.IconFillColor1">
+        <item name="tint">@color/green</item>
+    </style>
+
+
+    <style name="Theme.Music.FontColorDetails">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="Theme.Music.playlist">
+        <item name="android:background">@color/orange</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Theme.Music.Font.fragment">
+        <item name="android:background">@color/fragmentBG</item>
+        <item name="android:textColor">@color/surfaceColor</item>
+        <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Theme.Music.FontColor">
+        <item name="android:textColor">@color/lightBlue</item>
+    </style>
+
+    <style name="Theme.Music.FontColorPlaylist">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Theme.Music.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="Theme.Music.progressBar">
+        <item name="android:progressBackgroundTint">@color/black</item>
+        <item name="android:progressTint">@color/blue</item>
+        <item name="android:thumbTint">@color/blue</item>
+    </style>
+</resources>
