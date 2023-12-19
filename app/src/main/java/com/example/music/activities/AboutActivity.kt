@@ -1,5 +1,6 @@
 package com.example.music.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.example.music.databinding.ActivityAboutBinding
 class AboutActivity : AppCompatActivity() {
     lateinit var binding: ActivityAboutBinding
 
+    @SuppressLint("QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)

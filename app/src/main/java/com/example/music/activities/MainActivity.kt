@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
                     for (song in songList)
                         if (song.title.lowercase().contains(userInput))
                             musicListSearch.add(song)
-                    isSearching = true
+
                     musicAdapter.updateMusicList(searchList = musicListSearch)
                 }
                 return true
