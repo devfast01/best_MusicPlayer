@@ -10,6 +10,7 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -139,114 +140,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        binding.sort.setOnClickListener {
-            val menuList = arrayOf("Title", "Size", "Recently added")
-            var currentSort = sortOrder
-            val builder = MaterialAlertDialogBuilder(this)
-            builder.setTitle("Sorting")
-                .setPositiveButton("Sort") { _, _ ->
-                    val editor = getSharedPreferences("SORTING", MODE_PRIVATE).edit()
-                    editor.putInt("sortOrder", currentSort)
-                    editor.apply()
-                    init()
-                }
-                .setSingleChoiceItems(menuList, currentSort) { _, which ->
-                    currentSort = which
-                }
-            val customDialog = builder.create()
-            customDialog.show()
-        }
-        //for refreshing layout on swipe from top
-        binding.refreshLayout.setRefreshView(WaveAnimation(this@MainActivity))
-        binding.refreshLayout.setOnRefreshListener(object :
-            SSPullToRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(1500)
-                    songList = getAudio()
-
-                    musicAdapter.updateMusicList(songList)
-                    binding.refreshLayout.setRefreshing(false) // This stops refreshing
-                }
-            }
-        })
-
-        binding.searchView.clearFocus()
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = true
-            override fun onQueryTextChange(newText: String?): Boolean {
-                musicListSearch = ArrayList()
-                if (newText != null) {
-                    val userInput = newText.lowercase()
-                    for (song in songList)
-                        if (song.title.lowercase().contains(userInput))
-                            musicListSearch.add(song)
-
-                    musicAdapter.updateMusicList(searchList = musicListSearch)
-                }
-                return true
-            }
-        })
     }
 
     @SuppressLint("Recycle", "Range")
     private fun getAudio(): ArrayList<MusicClass> {
         val tempList = ArrayList<MusicClass>()
 
-        val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
 
-        val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.ALBUM,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.DATE_ADDED,
-            MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.ALBUM_ID
-        )
-
-
-        val cursor = this.contentResolver.query(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            projection,
-            selection,
-            null,
-            sortingList[sortOrder],
-            null
-        )
-
-        if (cursor != null) {
-            if (cursor.moveToNext()) do {
-                val titleC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-                val idC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID))
-                val albumC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))
-                val artistC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
-                val durationC =
-                    cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
-                val pathC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
-                val albumIdC =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
-                        .toString()
-                val uri = Uri.parse("content://media/external/audio/albumart")
-                val artUiC = Uri.withAppendedPath(uri, albumIdC).toString()
-                val music = MusicClass(
-                    id = idC,
-                    title = titleC,
-                    album = albumC,
-                    length = durationC,
-                    artist = artistC,
-                    path = pathC,
-                    artUri = artUiC
-                )
-                val file = File(music.path)
-                if (file.exists()) {
-                    tempList.add(music)
-                }
-
-            } while (cursor.moveToNext())
-            cursor.close()
-        }
         return tempList
     }
 

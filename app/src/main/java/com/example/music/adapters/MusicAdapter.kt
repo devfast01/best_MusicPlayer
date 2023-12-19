@@ -1,5 +1,6 @@
 package com.example.music.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -63,6 +64,7 @@ class MusicAdapter(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .error(R.drawable.image_as_cover)
             .into(holder.imageView)
+
         if (!selectionActivity) {
             holder.root.setOnLongClickListener {
                 try {
@@ -123,6 +125,7 @@ class MusicAdapter(
         ContextCompat.startActivity(context, intent, null)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateMusicList(searchList: ArrayList<MusicClass>) {
         musicList = ArrayList()
         musicList.addAll(searchList)
