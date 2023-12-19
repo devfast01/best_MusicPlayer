@@ -54,11 +54,6 @@ class MainActivity : AppCompatActivity() {
         @SuppressLint("StaticFieldLeak")
         lateinit var binding: ActivityMainBinding
         var sortOrder: Int = 0
-        val sortingList = arrayOf(
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.SIZE + " DESC",
-            MediaStore.Audio.Media.DATE_ADDED + " DESC"
-        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,27 +67,7 @@ class MainActivity : AppCompatActivity() {
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         filter.addAction(AudioManager.ACTION_HEADSET_PLUG)
         registerReceiver(myBroadcastReceiver, filter)
-
-        if (requestRuntimePermission()) {
-            init()
-            FavouriteActivity.favSongList = ArrayList()
-            val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE)
-            val jsonString = editor.getString("FavouriteSongs", null)
-            val typeToken = object : TypeToken<ArrayList<MusicClass>>() {}.type
-            if (jsonString != null) {
-                val data: ArrayList<MusicClass> =
-                    GsonBuilder().create().fromJson(jsonString, typeToken)
-                FavouriteActivity.favSongList.addAll(data)
-            }
-            PlaylistActivity.musicPlaylist = MusicPlaylist()
-            val jsonStringPlaylist = editor.getString("MusicPlaylist", null)
-            if (jsonStringPlaylist != null) {
-                val dataPlaylist: MusicPlaylist =
-                    GsonBuilder().create().fromJson(jsonStringPlaylist, MusicPlaylist::class.java)
-                PlaylistActivity.musicPlaylist = dataPlaylist
-            }
-        }
-
+         init()
 
 //for nav drawer
         toggle = ActionBarDrawerToggle(this, binding.root, R.string.open, R.string.close)
@@ -100,11 +75,6 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
-        binding.likedSongs.root.setOnClickListener {
-            val intent = Intent(baseContext, FavouriteActivity::class.java)
-            startActivity(intent)
-        }
 
 
         binding.navView.setNavigationItemSelectedListener {
@@ -134,12 +104,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        binding.playlistView.root.setOnClickListener {
-            val intent = Intent(baseContext, PlaylistActivity::class.java)
-            startActivity(intent)
-        }
-
-
     }
 
     @SuppressLint("Recycle", "Range")
@@ -149,7 +113,6 @@ class MainActivity : AppCompatActivity() {
 
         return tempList
     }
-
 
     private fun requestRuntimePermission(): Boolean {
         if (ActivityCompat.checkSelfPermission(
@@ -180,11 +143,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
 
-        val sortEditor = getSharedPreferences("SORTING", MODE_PRIVATE)
-        sortOrder = sortEditor.getInt("sortOrder", 0)
         songList = getAudio()
         recyclerView = binding.listView
-
 
         musicAdapter = MusicAdapter(this, songList)
         recyclerView.adapter = musicAdapter
