@@ -38,6 +38,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
+@Suppress("DEPRECATION")
 class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCompletionListener {
     private lateinit var afChangeListener: AudioManager.OnAudioFocusChangeListener
 
@@ -261,7 +262,7 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         songPosition = intent.getIntExtra("index", 0)
         when (intent.getStringExtra("class")) {
             "MusicAdapter" -> {
-                initServiceAndPlaylist(MainActivity.songList, shuffle = false)
+                initServiceAndPlaylist(MainActivity.songList!!, shuffle = false)
             }
 
             "FavAdapterSearch" -> {
@@ -299,7 +300,7 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             }
 
             "MusicAdapterSearch" -> {
-                initServiceAndPlaylist(MainActivity.musicListSearch, shuffle = false)
+                initServiceAndPlaylist(MainActivity.musicListSearch!!, shuffle = false)
             }
         }
     }

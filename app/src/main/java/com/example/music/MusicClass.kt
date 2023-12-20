@@ -15,15 +15,17 @@ import kotlin.math.roundToInt
 import kotlin.random.Random
 import kotlin.system.exitProcess
 
-
+data class SongResponse(
+    val data: List<MusicClass>
+)
 data class MusicClass(
     val id: String,
     val date: String,
-    val name: String,
+    var name: String,
     val duration: Long = 0,
-    val artist: String,
-    val coverArtUrl : String,
-    val url: String
+    var artist: String,
+    var coverArtUrl : String,
+    var url: String
 )
 
 class Playlist {

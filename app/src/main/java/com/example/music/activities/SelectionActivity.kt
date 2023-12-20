@@ -21,7 +21,7 @@ class SelectionActivity : AppCompatActivity() {
         binding.listViewSA.setItemViewCacheSize(30)
         binding.listViewSA.setHasFixedSize(true)
         binding.listViewSA.layoutManager = LinearLayoutManager(this)
-        adapter = MusicAdapter(this, MainActivity.songList, selectionActivity = true)
+        adapter = MusicAdapter(this, MainActivity.songList!!, selectionActivity = true)
         binding.listViewSA.adapter = adapter
         binding.backButton.setOnClickListener { finish() }
         binding.searchView.clearFocus()
@@ -31,11 +31,11 @@ class SelectionActivity : AppCompatActivity() {
                 MainActivity.musicListSearch = ArrayList()
                 if (newText != null) {
                     val userInput = newText.lowercase()
-                    for (song in MainActivity.songList)
+                    for (song in MainActivity.songList!!)
                         if (song.date.lowercase().contains(userInput))
-                            MainActivity.musicListSearch.add(song)
+                            MainActivity.musicListSearch!!.add(song)
                     MainActivity.isSearching = true
-                    adapter.updateMusicList(searchList = MainActivity.musicListSearch)
+                    adapter.updateMusicList(searchList = MainActivity.musicListSearch!!)
                 }
                 return true
             }
