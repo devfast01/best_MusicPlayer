@@ -32,7 +32,7 @@ class SelectionActivity : AppCompatActivity() {
                 if (newText != null) {
                     val userInput = newText.lowercase()
                     for (song in MainActivity.songList)
-                        if (song.title.lowercase().contains(userInput))
+                        if (song.date.lowercase().contains(userInput))
                             MainActivity.musicListSearch.add(song)
                     MainActivity.isSearching = true
                     adapter.updateMusicList(searchList = MainActivity.musicListSearch)

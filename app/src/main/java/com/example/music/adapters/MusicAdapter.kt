@@ -49,9 +49,9 @@ class MusicAdapter(
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
 
-        holder.titleView.text = musicList[position].title
+        holder.titleView.text = musicList[position].date
         holder.albumName.text = musicList[position].artist
-        holder.duration.text = formatDuration(musicList[position].length)
+        holder.duration.text = formatDuration(musicList[position].duration)
 
         val myOptions = RequestOptions()
             .centerCrop()
@@ -60,7 +60,7 @@ class MusicAdapter(
         Glide
             .with(context)
             .applyDefaultRequestOptions(myOptions)
-            .load(musicList[position].artUri)
+            .load(musicList[position].url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .error(R.drawable.image_as_cover)
             .into(holder.imageView)

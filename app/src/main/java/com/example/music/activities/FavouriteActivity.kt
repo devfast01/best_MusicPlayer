@@ -41,7 +41,7 @@ class FavouriteActivity : AppCompatActivity() {
                 if (newText != null) {
                     val userInput = newText.lowercase()
                     for (song in favSongList)
-                        if (song.title.lowercase().contains(userInput))
+                        if (song.date.lowercase().contains(userInput))
                             musicListSearch.add(song)
                     MainActivity.isSearching = true
                     adapter.updateMusicList(searchList = musicListSearch)

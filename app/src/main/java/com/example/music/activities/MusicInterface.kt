@@ -5,8 +5,6 @@ import android.content.*
 import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.graphics.drawable.GradientDrawable
-import android.media.AudioAttributes
-import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
@@ -78,12 +76,12 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             startService(intentService)
             musicList = ArrayList()
             musicList.add(getMusicDetails(intent.data!!))
-            Glide.with(this).load(getImageArt(musicList[songPosition].path)).apply(
+            Glide.with(this).load(getImageArt(musicList[songPosition].coverArtUrl)).apply(
                 RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop()
             ).into(binding.interfaceCover)
             binding.interfaceSongName.text =
-                musicList[songPosition].title.removePrefix("/storage/emulated/0/")
-            binding.interfaceArtistName.text = musicList[songPosition].album
+                musicList[songPosition].date.removePrefix("/storage/emulated/0/")
+            binding.interfaceArtistName.text = musicList[songPosition].name
         } else {
             initActivity()
         }
@@ -125,7 +123,7 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "audio/*"
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(musicList[songPosition].path))
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(musicList[songPosition].coverArtUrl))
             startActivity(Intent.createChooser(shareIntent, "Sharing Music File!!"))
 
         }
@@ -309,12 +307,12 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun setLayout() {
         try {
             fIndex = favouriteCheck(musicList[songPosition].id)
-            Glide.with(this).load(getImageArt(musicList[songPosition].path)).apply(
+            Glide.with(this).load(getImageArt(musicList[songPosition].coverArtUrl)).apply(
                 RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop()
             ).into(binding.interfaceCover)
 
-            binding.interfaceSongName.text = musicList[songPosition].title
-            binding.interfaceArtistName.text = musicList[songPosition].album
+            binding.interfaceSongName.text = musicList[songPosition].date
+            binding.interfaceArtistName.text = musicList[songPosition].name
             if (isRepeating) {
                 binding.interfaceRepeat.setImageResource(R.drawable.repeat_on)
                 binding.interfaceRepeat.setColorFilter(ContextCompat.getColor(this, R.color.green))
@@ -331,7 +329,7 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 binding.interfaceLikeButton.setImageResource(R.drawable.heart)
             }
 
-            val img = getImageArt(musicList[songPosition].path)
+            val img = getImageArt(musicList[songPosition].coverArtUrl)
             val image = if (img != null) {
                 BitmapFactory.decodeByteArray(img, 0, img.size)
             } else {
@@ -354,7 +352,7 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         try {
             if (musicService!!.mediaPlayer == null) musicService!!.mediaPlayer = MediaPlayer()
             musicService!!.mediaPlayer!!.reset()
-            musicService!!.mediaPlayer!!.setDataSource(musicList[songPosition].path)
+            musicService!!.mediaPlayer!!.setDataSource(musicList[songPosition].coverArtUrl)
             musicService!!.mediaPlayer!!.prepare()
             binding.interfacePlay.setImageResource((R.drawable.pause))
             binding.interfaceSeekStart.text =
@@ -440,11 +438,11 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
         //for refreshing now playing image & text on song completion
         NowPlaying.binding.fragmentTitle.isSelected = true
-        Glide.with(applicationContext).load(getImageArt(musicList[songPosition].path))
+        Glide.with(applicationContext).load(getImageArt(musicList[songPosition].coverArtUrl))
             .apply(RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop())
             .into(NowPlaying.binding.fragmentImage)
-        NowPlaying.binding.fragmentTitle.text = musicList[songPosition].title
-        NowPlaying.binding.fragmentAlbumName.text = musicList[songPosition].title
+        NowPlaying.binding.fragmentTitle.text = musicList[songPosition].date
+        NowPlaying.binding.fragmentAlbumName.text = musicList[songPosition].date
 
     }
 
@@ -469,12 +467,12 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             val duration = durationColumn?.let { cursor.getLong(it) }!!
             return MusicClass(
                 id = "Unknown",
-                title = path.toString(),
-                album = "Unknown",
+                date = path.toString(),
+                name = "Unknown",
                 artist = "Unknown",
-                length = duration,
-                artUri = "Unknown",
-                path = path.toString()
+                duration = duration,
+                url = "Unknown",
+                coverArtUrl = path.toString()
             )
         } finally {
             cursor?.close()

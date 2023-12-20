@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.music
 
 import android.content.ContentValues.TAG
@@ -16,12 +18,12 @@ import kotlin.system.exitProcess
 
 data class MusicClass(
     val id: String,
-    val title: String,
-    val album: String,
-    val length: Long = 0,
+    val date: String,
+    val name: String,
+    val duration: Long = 0,
     val artist: String,
-    val path: String,
-    val artUri: String
+    val coverArtUrl : String,
+    val url: String
 )
 
 class Playlist {
@@ -71,7 +73,7 @@ fun exitApplicationNotification() {
 
 fun checkPlaylist(playlist: ArrayList<MusicClass>): ArrayList<MusicClass> {
     playlist.forEachIndexed { index, music ->
-        val file = File(music.path)
+        val file = File(music.coverArtUrl)
         if (!file.exists())
             playlist.removeAt(index)
     }

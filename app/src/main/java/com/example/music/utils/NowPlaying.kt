@@ -86,14 +86,14 @@ class NowPlaying : Fragment() {
             })
 
             Glide.with(this)
-                .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].path))
+                .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].coverArtUrl))
                 .apply(
                     RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop()
                 ).into(binding.fragmentImage)
             binding.fragmentTitle.text =
-                MusicInterface.musicList[MusicInterface.songPosition].title
+                MusicInterface.musicList[MusicInterface.songPosition].date
             binding.fragmentAlbumName.text =
-                MusicInterface.musicList[MusicInterface.songPosition].album
+                MusicInterface.musicList[MusicInterface.songPosition].name
             if (MusicInterface.isPlaying) binding.fragmentButton.setImageResource(R.drawable.pause_now)
             else binding.fragmentButton.setImageResource(R.drawable.play_now)
 
@@ -126,14 +126,14 @@ class NowPlaying : Fragment() {
         setSongPosition(increment = increment)
         MusicInterface.musicService!!.initSong()
         Glide.with(requireContext())
-            .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].path))
+            .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].coverArtUrl))
             .apply(
                 RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop()
             ).into(binding.fragmentImage)
         binding.fragmentTitle.text =
-            MusicInterface.musicList[MusicInterface.songPosition].title
+            MusicInterface.musicList[MusicInterface.songPosition].date
         binding.fragmentAlbumName.text =
-            MusicInterface.musicList[MusicInterface.songPosition].album
+            MusicInterface.musicList[MusicInterface.songPosition].name
         playMusic()
     }
 

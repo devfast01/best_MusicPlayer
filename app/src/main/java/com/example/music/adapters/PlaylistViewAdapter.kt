@@ -64,7 +64,7 @@ class PlaylistViewAdapter(
         }
         if (PlaylistActivity.musicPlaylist.ref[position].playlist.size > 0) {
             Glide.with(context)
-                .load(PlaylistActivity.musicPlaylist.ref[position].playlist[0].artUri)
+                .load(PlaylistActivity.musicPlaylist.ref[position].playlist[0].url)
                 .apply(
                     RequestOptions().placeholder(R.drawable.image_as_cover)
                         .centerCrop()

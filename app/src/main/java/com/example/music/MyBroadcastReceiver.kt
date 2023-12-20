@@ -80,24 +80,24 @@ class MyBroadcastReceiver : BroadcastReceiver() {
             setSongPosition(increment = increment)
             MusicInterface.musicService!!.initSong()
             Glide.with(context)
-                .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].path))
+                .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].coverArtUrl))
                 .apply(
                     RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop()
                 ).into(MusicInterface.binding.interfaceCover)
 
             MusicInterface.binding.interfaceSongName.text =
-                MusicInterface.musicList[MusicInterface.songPosition].title
+                MusicInterface.musicList[MusicInterface.songPosition].date
             MusicInterface.binding.interfaceArtistName.text =
-                MusicInterface.musicList[MusicInterface.songPosition].album
+                MusicInterface.musicList[MusicInterface.songPosition].name
             Glide.with(context)
-                .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].path))
+                .load(getImageArt(MusicInterface.musicList[MusicInterface.songPosition].coverArtUrl))
                 .apply(
                     RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop()
                 ).into(NowPlaying.binding.fragmentImage)
             NowPlaying.binding.fragmentTitle.text =
-                MusicInterface.musicList[MusicInterface.songPosition].title
+                MusicInterface.musicList[MusicInterface.songPosition].date
             NowPlaying.binding.fragmentAlbumName.text =
-                MusicInterface.musicList[MusicInterface.songPosition].album
+                MusicInterface.musicList[MusicInterface.songPosition].name
             playMusic()
             MusicInterface.fIndex =
                 favouriteCheck(MusicInterface.musicList[MusicInterface.songPosition].id)

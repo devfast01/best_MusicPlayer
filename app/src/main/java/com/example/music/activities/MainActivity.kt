@@ -27,6 +27,7 @@ import com.example.music.R
 import com.example.music.utils.WaveAnimation
 import com.example.music.databinding.ActivityMainBinding
 import com.example.music.exitApplication
+import com.example.music.utils.RetrofitService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -35,6 +36,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.util.*
 
@@ -42,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var musicAdapter: MusicAdapter
     private lateinit var toggle: ActionBarDrawerToggle
     private val myBroadcastReceiver = MyBroadcastReceiver()
+    private val apiService = RetrofitService.getInstance()
+
 
     companion object {
         lateinit var songList: ArrayList<MusicClass>
@@ -82,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.navAbout -> {
-                    startActivity(Intent(this, AboutActivity::class.java))
+                    getNewSongs()
                 }
 
                 R.id.navExit -> {
@@ -102,6 +108,36 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    private fun getNewSongs() {
+        val apiService =
+            apiService.getNewSongs(
+            )
+
+        apiService?.enqueue(object : Callback<String?> {
+            override fun onResponse(call: Call<String?>, response: Response<String?>) {
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        val jsonresponse: String = response.body().toString()
+                        // on below line we are initializing our adapter.
+                        Log.d("response", jsonresponse.toString())
+                    } else {
+                        Log.i(
+                            "onEmptyResponse",
+                            "Returned empty response"
+                        )
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<String?>, t: Throwable) {
+                Log.e(
+                    "ERROR",
+                    t.message.toString()
+                )
+            }
+        })
     }
 
     @SuppressLint("Recycle", "Range")

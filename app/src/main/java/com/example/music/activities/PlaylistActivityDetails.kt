@@ -68,7 +68,7 @@ class PlaylistActivityDetails : AppCompatActivity() {
             Glide
                 .with(this)
                 .applyDefaultRequestOptions(myOptions)
-                .load(PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist[0].artUri)
+                .load(PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist[0].url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(R.drawable.image_as_cover)
                 .into(binding.imagePAD)

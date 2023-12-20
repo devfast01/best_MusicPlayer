@@ -42,12 +42,12 @@ class FavouriteAdapter(
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        holder.titleView.text = musicList[position].title
-        holder.albumName.text = musicList[position].album
-        holder.duration.text = formatDuration(musicList[position].length)
+        holder.titleView.text = musicList[position].date
+        holder.albumName.text = musicList[position].name
+        holder.duration.text = formatDuration(musicList[position].duration)
         Glide
             .with(context)
-            .load(getImageArt(musicList[position].path))
+            .load(getImageArt(musicList[position].coverArtUrl))
             .apply(RequestOptions().placeholder(R.drawable.image_as_cover).centerCrop())
             .into(holder.imageView)
         holder.itemView.setOnClickListener {
