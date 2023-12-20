@@ -38,7 +38,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 
-
 class MainActivity : AppCompatActivity() {
     lateinit var musicAdapter: MusicAdapter
     private lateinit var toggle: ActionBarDrawerToggle
@@ -76,7 +75,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navFeedback -> {
@@ -109,7 +107,6 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("Recycle", "Range")
     private fun getAudio(): ArrayList<MusicClass> {
         val tempList = ArrayList<MusicClass>()
-
 
         return tempList
     }
