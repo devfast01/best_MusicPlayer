@@ -465,7 +465,7 @@ class MusicInterface : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             val durationColumn = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
             cursor!!.moveToFirst()
             val path = dataColumn?.let { cursor.getString(it) }
-            val duration = durationColumn?.let { cursor.getLong(it) }!!
+            val duration = durationColumn?.let { cursor.getString(it) }!!
             return MusicClass(
                 id = "Unknown",
                 date = path.toString(),

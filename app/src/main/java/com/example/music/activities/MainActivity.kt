@@ -2,47 +2,29 @@ package com.example.music.activities
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.media.AudioManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.music.adapters.MusicAdapter
 import com.example.music.MusicClass
-import com.example.music.MusicPlaylist
 import com.example.music.MyBroadcastReceiver
 import com.example.music.R
-import com.example.music.utils.WaveAnimation
 import com.example.music.databinding.ActivityMainBinding
 import com.example.music.exitApplication
 import com.example.music.utils.RetrofitService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import com.simform.refresh.SSPullToRefreshLayout
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -76,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         filter.addAction(AudioManager.ACTION_HEADSET_PLUG)
         registerReceiver(myBroadcastReceiver, filter)
+
 
 
 //for nav drawer
@@ -154,18 +137,21 @@ class MainActivity : AppCompatActivity() {
 
         for (i in 0 until dataArray.length()) {
             val dataObject = dataArray.getJSONObject(i)
+
             val musicItem = MusicClass(
                 id = dataObject.getString("id"),
                 date = dataObject.getString("date"),
                 name = dataObject.getString("name"),
+                duration = dataObject.getString("duration"),
                 artist = dataObject.getString("artist"),
                 coverArtUrl = dataObject.getString("cover_art_url"),
                 url = dataObject.getString("url")
             )
-            modelRecyclerArrayList.add(musicItem)
 
-            Log.d("RESPONSE", musicItem.toString())
+            modelRecyclerArrayList.add(musicItem)
         }
+        Log.d("RESPONSE", modelRecyclerArrayList.toString())
+
         songList = modelRecyclerArrayList
         recyclerView = binding.listView
         musicAdapter = MusicAdapter(this, songList!!)

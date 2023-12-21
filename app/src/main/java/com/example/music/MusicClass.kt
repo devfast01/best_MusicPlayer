@@ -22,9 +22,9 @@ data class MusicClass(
     val id: String,
     val date: String,
     var name: String,
-    val duration: Long = 0,
+    val duration: String,
     var artist: String,
-    var coverArtUrl : String,
+    var coverArtUrl: String,
     var url: String
 )
 

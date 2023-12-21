@@ -44,7 +44,6 @@ class FavouriteAdapter(
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         holder.titleView.text = musicList[position].date
         holder.albumName.text = musicList[position].name
-        holder.duration.text = formatDuration(musicList[position].duration)
         Glide
             .with(context)
             .load(getImageArt(musicList[position].coverArtUrl))

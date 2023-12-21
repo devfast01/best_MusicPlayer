@@ -51,7 +51,6 @@ class MusicAdapter(
 
         holder.titleView.text = musicList[position].date
         holder.albumName.text = musicList[position].artist
-        holder.duration.text = formatDuration(musicList[position].duration)
 
         val myOptions = RequestOptions()
             .centerCrop()
